@@ -1,8 +1,7 @@
 from typing import Iterable
 from django.db import models
 from django.core.exceptions import ValidationError
-from django.core.validators import MinLengthValidator ,MaxLengthValidator
-
+from django.core.validators import MinLengthValidator,MaxLengthValidator
 
 class Book(models.Model):
     title = models.CharField("Nom", max_length=255)
@@ -19,10 +18,7 @@ class Book(models.Model):
         self.title = self.title.upper
         return super().save(*args, *kwargs)
 
-class NaqdOcard(models.TextChoices):
-        NAQD = ("naqd", "Naqd",)
-        CARD = ("card", "Karta",)
-        LOAN = ("loan", "Qarzga",)
+
 
 
 class Sale(models.Model):
@@ -30,7 +26,8 @@ class Sale(models.Model):
     qty = models.PositiveIntegerField("Sotilgan soni", default=0)
     price = models.IntegerField(verbose_name="Sotilgan narxi", default=0)
     total_price = models.IntegerField(verbose_name="Umumiy savdo", default=0)
-    payment_type = models.CharField("To'lov turi", max_length=4, choices=NaqdOcard.choices)
+    image = models.ImageField(upload_to="book_image", null=True, blank=True)
+
 
     created_at = models.DateTimeField("Savdo sanasi", auto_now=True)
 
